@@ -614,6 +614,31 @@ class CrazyflieServer:
         """
         self.emergencyService()
 
+    def startPlanning(self):
+        """
+        start planning
+        """
+        self.startPlanningService()
+
+    def stopPlanning(self):
+        """
+        stop planning
+        """
+        self.stopPlanningService()
+
+    def startPatrol(self):
+        """
+        start patrol
+        """
+        self.startPatrolService()
+
+    def stopPatrol(self):
+        """
+        stop patrol
+        """
+        self.stopPatrolService()
+
+
     def takeoff(self, targetHeight, duration, groupMask = 0):
         """Broadcasted takeoff - fly straight up, then hover indefinitely.
 
@@ -693,3 +718,16 @@ class CrazyflieServer:
         """Broadcasted setParam. See Crazyflie.setParam() for details."""
         rospy.set_param("/allcfs/" + name, value)
         self.updateParamsService([name])
+
+
+    def initializePlanner(self):
+        print "Wait response from the planner"
+        rospy.wait_for_service("/start_planning")
+        self.startPlanningService = rospy.ServiceProxy("/start_planning", Empty)
+        rospy.wait_for_service("/stop_planning")
+        self.stopPlanningService = rospy.ServiceProxy("/stop_planning", Empty)
+        rospy.wait_for_service("/start_patrol")
+        self.startPatrolService = rospy.ServiceProxy("/start_patrol", Empty)
+        rospy.wait_for_service("/stop_patrol")
+        self.stopPatrolService = rospy.ServiceProxy("/stop_patrol", Empty)
+        print "Success to connect the planner"

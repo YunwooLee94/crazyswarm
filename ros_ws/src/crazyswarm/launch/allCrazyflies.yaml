@@ -1,17 +1,37 @@
 crazyflies:
   - id: 1
     channel: 100
-    initialPosition: [-1.0, 1.0, 0.0]
+    initialPosition: [-3.0, 2.0, 0.0]
     type: default # (Yunwoo)
   - id: 2
     channel: 90
-    initialPosition: [-1.0, -1.0, 0.0]
+    initialPosition: [-3.0, 1.0, 0.0]
     type: default # (Yunwoo)
   - id: 3
     channel: 80
-    initialPosition: [1.0, 1.0, 0.0]
+    initialPosition: [-3.0, 0.0, 0.0]
     type: default # (Yunwoo)
   - id: 4
     channel: 100
-    initialPosition: [1.0, -1.0, 0.0]
+    initialPosition: [-3.0, -1.0, 0.0]
+    type: default # (Yunwoo)
+  - id: 5
+    channel: 90
+    initialPosition: [-3.0, -2.0, 0.0]
+    type: default # (Yunwoo)
+  - id: 6
+    channel: 80
+    initialPosition: [3.0, 2.0, 0.0]
+    type: default # (Yunwoo)
+  - id: 7
+    channel: 90
+    initialPosition: [3.0, 1.0, 0.0]
+    type: default # (Yunwoo)
+  - id: 8
+    channel: 80
+    initialPosition: [3.0, 0.0, 0.0]
+    type: default # (Yunwoo)
+  - id: 9
+    channel: 70
+    initialPosition: [3.0, -1.0, 0.0]
     type: default # (Yunwoo)

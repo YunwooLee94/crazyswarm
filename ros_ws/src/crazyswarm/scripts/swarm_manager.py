@@ -115,16 +115,26 @@ def takeoff():
     cfs = selected_cfs()
     N = len(cfs)
 
-    hsv_cmap = plt.cm.get_cmap('hsv')
-    hsv_norm = mpl.colors.Normalize(vmin=0, vmax=1)
-    hsv_scalarMap = cm.ScalarMappable(norm=hsv_norm, cmap=hsv_cmap)
+    # hsv_cmap = plt.cm.get_cmap('hsv')
+    # hsv_norm = mpl.colors.Normalize(vmin=0, vmax=1)
+    # hsv_scalarMap = cm.ScalarMappable(norm=hsv_norm, cmap=hsv_cmap)
 
-    count = 0.0
+    # count = 0.0
+    # for cf in cfs:
+    #     cf.takeoff(targetHeight=Z, duration=1.0 + Z)
+    #     color = hsv_scalarMap.to_rgba(float(count)/N)
+    #     cf.setLEDColor(color[0],color[1],color[2])
+    #     count = count + 1.0
+
+    count_id = 1 # (Yunwoo)
     for cf in cfs:
         cf.takeoff(targetHeight=Z, duration=1.0 + Z)
-        color = hsv_scalarMap.to_rgba(float(count)/N)
-        cf.setLEDColor(color[0],color[1],color[2])
-        count = count + 1.0
+        if(count_id<N):
+            cf.setLEDColor(0.0,1.0,0.0)
+        if(count_id==N):
+            cf.setLEDColor(1.0,0.0,0.0)
+        count_id = count_id + 1
+
     timeHelper.sleep(1.0 + Z)
     print "Take off"
 

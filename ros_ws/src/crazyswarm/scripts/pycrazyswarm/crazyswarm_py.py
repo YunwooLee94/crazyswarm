@@ -26,7 +26,7 @@ def build_argparser(parent_parsers=[]):
 
 
 class Crazyswarm:
-    def __init__(self, crazyflies_yaml=None, parent_parser=None, args=None):
+    def __init__(self, crazyflies_yaml=None, add_mode=False, parent_parser=None, args=None):
         if parent_parser is not None:
             parents = [parent_parser]
         else:
@@ -38,17 +38,17 @@ class Crazyswarm:
 
         if crazyflies_yaml is None:
             crazyflies_yaml = "../launch/crazyflies.yaml"
-        if crazyflies_yaml.endswith(".yaml"):
-            crazyflies_yaml = open(crazyflies_yaml, 'r').read()
+        # if crazyflies_yaml.endswith(".yaml"): (Yunwoo)
+        #     crazyflies_yaml = open(crazyflies_yaml, 'r').read()
 
         if args.sim:
             from .crazyflieSim import TimeHelper, CrazyflieServer
             self.timeHelper = TimeHelper(args.vis, args.dt, args.writecsv, disturbanceSize=args.disturbance, maxVel=args.maxvel, videopath=args.video)
-            self.allcfs = CrazyflieServer(self.timeHelper, crazyflies_yaml)
+            self.allcfs = CrazyflieServer(self.timeHelper, crazyflies_yaml,add_mode)
             atexit.register(self.timeHelper._atexit)
         else:
             from .crazyflie import TimeHelper, CrazyflieServer
-            self.allcfs = CrazyflieServer(crazyflies_yaml)
+            self.allcfs = CrazyflieServer(crazyflies_yaml,add_mode)
             self.timeHelper = TimeHelper()
             if args.writecsv:
                 print("WARNING: writecsv argument ignored! This is only available in simulation.")

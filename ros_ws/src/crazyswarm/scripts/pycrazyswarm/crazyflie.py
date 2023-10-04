@@ -558,7 +558,7 @@ class CrazyflieServer:
         crazyfliesById (Dict[int, Crazyflie]): Index to the same Crazyflie
             objects by their ID number (last byte of radio address).
     """
-    def __init__(self, crazyflies_yaml="../launch/crazyflies.yaml"):
+    def __init__(self, crazyflies_yaml="../launch/crazyflies.yaml",add_mode=False):
         """Initialize the server. Waits for all ROS services before returning.
 
         Args:
@@ -567,7 +567,10 @@ class CrazyflieServer:
                 from file. Otherwise, interpret as YAML string and parse
                 directly from string.
         """
-        rospy.init_node("CrazyflieAPI", anonymous=False)
+        if(add_mode): # (Yunwoo)
+            rospy.init_node("CrazyflieAPIAdd", anonymous=False)
+        else:
+            rospy.init_node("CrazyflieAPI", anonymous=False) 
         rospy.wait_for_service("/emergency")
         self.emergencyService = rospy.ServiceProxy("/emergency", Empty)
         rospy.wait_for_service("/takeoff")
@@ -637,6 +640,18 @@ class CrazyflieServer:
         stop patrol
         """
         self.stopPatrolService()
+
+    def startKeeperPlanning(self):
+        """
+        start keeper planning
+        """
+        self.startKeeperPlanningService()
+
+    def stopKeeperPlanning(self):
+        """
+        stop keeper planning
+        """
+        self.stopKeeperPlanningService()
 
 
     def takeoff(self, targetHeight, duration, groupMask = 0):
@@ -731,3 +746,12 @@ class CrazyflieServer:
         rospy.wait_for_service("/stop_patrol")
         self.stopPatrolService = rospy.ServiceProxy("/stop_patrol", Empty)
         print "Success to connect the planner"
+
+
+    def initializeLosKeeperPlanner(self):
+        print "Wait response from the los-keeper planner"
+        rospy.wait_for_service("/start_keeper_planning")
+        self.startKeeperPlanningService = rospy.ServiceProxy("/start_move_by_keeper_planning", Empty)
+        rospy.wait_for_service("/stop_keeper_planning")
+        self.stopKeeperPlanningService = rospy.ServiceProxy("/stop_move_by_keeper_planning", Empty)
+        print "Success to connect the los-keeper planner"
